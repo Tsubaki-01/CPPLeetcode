@@ -1,3 +1,11 @@
+// @before-stub-for-debug-begin
+#include <vector>
+#include <string>
+#include "commoncppproblem630.h"
+
+using namespace std;
+// @before-stub-for-debug-end
+
 /*
  * @lc app=leetcode.cn id=630 lang=cpp
  *
@@ -70,18 +78,43 @@ class Solution
 public:
     int scheduleCourse(vector<vector<int>>& courses)
     {
-        int res = 0;
         priority_queue<int, vector<int>> duration;
 
+        int curDay = 0;
+        // 按DDL排序
         sort(courses.begin(), courses.end(), [] (vector<int>& a, vector<int>& b)
             {
                 return a[1] < b[1];
             });
+
         for (int i = 0;i < courses.size();i++)
         {
-
+            curDay += courses[i][0];
+            duration.push(courses[i][0]);
+            if (curDay > courses[i][1])
+            {
+                curDay -= duration.top();
+                duration.pop();
+            }
         }
+        /*
+        如果能增大课程数量，就增大课程数量，
+        如果不能增大课程数量，就在保持课程数量不变的前提下，尝试减少总时长，使得后续增大课程数量的概率增加
+        */
+        /*
+        if (curDay + courses[i][0] > courses[i][1])
+        {
+            if (courses[i][0] < duration.top())
+            {
+                curDay -= duration.top();
+                duration.pop();
+            }
+            else continue;
+        }
+        curDay += courses[i][0];
+        duration.push(courses[i][0]);
+        */
+        return duration.size();
     }
 };
 // @lc code=end
-
