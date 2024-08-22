@@ -51,15 +51,22 @@ struct edge
 // 对稀疏图效果好
 int main()
 {
+    // 定义两个整数m和n，用于存储输入的边数和顶点数
     int m, n;
+    // 从标准输入中读取m和n的值
     cin >> n >> m;
+    // 定义一个长度为n+1的vector，用于存储每个顶点到起点的最短距离，初始值为INT_MAX
     vector<int> minDist(n + 1, INT_MAX);
+    // 定义起点和终点
     int start = 1;
     int end = n;
 
+    // 将起点的最短距离设为0
     minDist[start] = 0;
 
+    // 定义一个长度为n+1的vector，用于存储每个顶点的邻接表
     vector<list<edge>> edges(n + 1);
+    // 从标准输入中读取m条边的信息，并存储到邻接表中
     while (m--)
     {
         int s, t, v;
@@ -67,22 +74,31 @@ int main()
         edges[s].push_back(edge(t, v));
     }
 
+    // 定义一个队列，用于存储待处理的顶点
     queue<int> que;
+    // 定义一个长度为n+1的vector，用于存储每个顶点是否在队列中
     vector<bool> isInQueue(n + 1, false);
 
+    // 将起点加入队列，并将起点标记为在队列中
     que.push(start);
     isInQueue[start] = true;
 
+    // 当队列不为空时，循环处理队列中的顶点
     while (!que.empty())
     {
+        // 取出队列中的第一个顶点
         int cur = que.front();que.pop();
+        // 将该顶点标记为不在队列中
         isInQueue[cur] = false;
 
+        // 遍历当前顶点的邻接表
         for (auto e : edges[cur])
         {
+            // 如果通过当前顶点到达邻接顶点的距离小于已知的最短距离，则更新最短距离
             if (minDist[cur] + e.val < minDist[e.to])
             {
                 minDist[e.to] = minDist[cur] + e.val;
+                // 如果邻接顶点不在队列中，则将其加入队列，并标记为在队列中
                 if (!isInQueue[e.to])
                 {
                     que.push(e.to);
@@ -93,9 +109,12 @@ int main()
     }
 
 
+    // 如果终点的最短距离仍为INT_MAX，则说明无法到达终点，输出-1
     if (minDist[end] == INT_MAX)
         cout << -1 << endl;
+    // 否则输出终点的最短距离
     else cout << minDist[end] << endl;
 
+    // 返回0，表示程序正常结束
     return 0;
 }

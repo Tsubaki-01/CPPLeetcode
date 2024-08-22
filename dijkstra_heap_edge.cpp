@@ -54,7 +54,7 @@ int main()
     vector<int> minDist(n + 1, INT_MAX);
     vector<bool> visited(n + 1, false);
     auto cmp = [] (pair<int, int>& a, pair<int, int>& b) { return a.second > b.second; };
-    // <int,int>(节点，起点到节点的距离)
+    // ！！！！！！！！！<int,int>(节点，起点到节点的距离)！！！！！！！！！
     priority_queue < pair<int, int>, vector<pair<int, int>>, decltype(cmp)> heap(cmp);
     vector<int> parent(n + 1, -1);
 
