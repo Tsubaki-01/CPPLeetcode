@@ -115,6 +115,7 @@ int main()
             for (auto& i : s)
                 i = 0;
         }
+        
         A_star(start, b1, b2, step);
         cout << step[b1][b2] << endl;
     }

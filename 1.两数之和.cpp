@@ -16,6 +16,27 @@ using namespace std;
 #include <unordered_map>
 using namespace std;
 // @lc code=start
+class Solution
+{
+public:
+    vector<int> twoSum(vector<int>& nums, int target)
+    {
+        unordered_map<int, int> map;
+        for (int i = 0;i < nums.size();i++)
+        {
+            int num = nums[i];
+            if (map.find(target - num) != map.end())
+                return vector<int>{map[target - num], i};
+
+            map.insert({ num,i });
+        }
+        return vector<int>{};
+    }
+};
+// @lc code=end
+
+/*
+
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
@@ -31,5 +52,5 @@ public:
         return vector<int>{};
     }
 };
-// @lc code=end
 
+ */
