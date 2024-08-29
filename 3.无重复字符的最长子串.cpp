@@ -1,3 +1,11 @@
+// @before-stub-for-debug-begin
+#include <vector>
+#include <string>
+#include "commoncppproblem3.h"
+
+using namespace std;
+// @before-stub-for-debug-end
+
 /*
  * @lc app=leetcode.cn id=3 lang=cpp
  *
@@ -16,31 +24,46 @@
 using namespace std;
 // @lc code=start
 // 双指针
-class Solution {
+class Solution
+{
 public:
-    int lengthOfLongestSubstring(string s) {
+    int lengthOfLongestSubstring(string s)
+    {
         if (s.size() == 0 || s.size() == 1)
             return s.size();
-        unordered_map<int, unordered_set<char>> map;
-        int res = 1;
 
-        for (int left = 0;left < s.size();left++)
+        int t = 0;
+        int res = 0;
+        int left = 0;
+        int right = 0;
+
+        unordered_set<char> set;
+
+        while (right < s.size() && left <= right)
         {
-            map[left].insert(s[left]);
-            int t = 1;
-            for (int right = left + 1;right < s.size();right++)
+            if (set.count(s[right]) == 0)
             {
-                if (map[left].count(s[right]) == 0)
-                {
-                    map[left].insert(s[right]);
-                    t++;
-                    res = max(res, t);
-                }
-                else break;
+                set.insert(s[right]);
+                t++;
+                right++;
+                res = max(res, t);
             }
+            else
+            {
+                while (s[left] != s[right])
+                {
+                    set.erase(s[left]);
+                    left++;
+                    t--;
+                }
+                left++;
+                right++;
+            }
+
         }
+
         return res;
+
     }
 };
 // @lc code=end
-
