@@ -13,6 +13,59 @@ using namespace std;
 class Window
 {
 public:
+    int getMax()
+    {
+        return dq.front();
+    }
+
+    void push(int in)
+    {
+        while (!dq.empty() && in > dq.back())
+        {
+            dq.pop_back();
+        }
+        dq.push_back(in);
+    }
+
+    void pop(int out)
+    {
+        if (!dq.empty() && out == dq.front())
+            dq.pop_front();
+    }
+
+private:
+    deque<int> dq;
+};
+
+// 单调队列
+
+class Solution
+{
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k)
+    {
+        vector<int> res;
+        Window window;
+        for (int i = 0; i < k; i++)
+            window.push(nums[i]);
+        res.push_back(window.getMax());
+
+        for (int i = 1; i < nums.size() - k + 1; i++)
+        {
+            window.pop(nums[i - 1]);
+            window.push(nums[i + k - 1]);
+            res.push_back(window.getMax());
+        }
+        return res;
+    }
+};
+
+// @lc code=end
+
+/*
+class Window
+{
+public:
     int front()
     {
         return queue.front();
@@ -67,6 +120,4 @@ public:
         return res;
     }
 };
-
-// @lc code=end
-
+ */
