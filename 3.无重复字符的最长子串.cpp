@@ -23,6 +23,41 @@ using namespace std;
 #include <numeric>
 using namespace std;
 // @lc code=start
+// 滑动窗口
+class Solution
+{
+public:
+    int lengthOfLongestSubstring(string s)
+    {
+        if (s.size() == 0 || s.size() == 1)
+            return s.size();
+
+        int res = 0;
+        int left = 0;
+        int right = 0;
+
+        unordered_set<char> set;
+
+        while (right < s.size() && left <= right)
+        {
+            while (set.find(s[right]) != set.end())
+            {
+                set.erase(s[left]);
+                left++;
+            }
+            set.insert(s[right]);
+            right++;
+            res = max(res, right - left);
+        }
+
+        return res;
+
+    }
+};
+// @lc code=end
+
+
+/*
 // 双指针
 class Solution
 {
@@ -59,11 +94,10 @@ public:
                 left++;
                 right++;
             }
-
         }
 
         return res;
 
     }
 };
-// @lc code=end
+ */
