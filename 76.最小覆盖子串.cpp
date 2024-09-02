@@ -1,3 +1,11 @@
+// @before-stub-for-debug-begin
+#include <vector>
+#include <string>
+#include "commoncppproblem76.h"
+
+using namespace std;
+// @before-stub-for-debug-end
+
 /*
  * @lc app=leetcode.cn id=76 lang=cpp
  *
@@ -73,31 +81,73 @@ class Solution
 public:
     string minWindow(string s, string t)
     {
-        string res;
-        if (s.size() < t.size())
-            return res;
-        else if (s.size() == t.size())
-        {
-            if (s == t)
-                return s;
-            else return res;
-        }
-
-        int s_cnt[26] = { 0 };
-        int t_cnt[26] = { 0 };
-        for (auto& c : t)
-            t_cnt[c - 'a']++;
-
-        int left = 0;
-        int right = 0;
-
-        while (left <= right && right < s.size())
-        {
-
-        }
-
 
     }
 };
 // @lc code=end
 
+/*
+class Solution
+{
+public:
+    // 在字符串s中找到包含字符串t所有字符的最小子串
+    string minWindow(string s, string t)
+    {
+        // 如果t的长度大于s的长度，则返回空字符串
+        if (t.size() > s.size())
+            return "";
+
+        // 使用unordered_map来存储t中每个字符的个数
+        unordered_map<int, int> t_cnt;
+        for (auto& c : t)
+        {
+            t_cnt[c]++;
+        }
+
+        // 定义左右指针，初始位置都为0
+        int left = 0, right = 0;
+        // 定义最小子串的长度，初始值为INT_MAX
+        int len = INT_MAX;
+        // 定义计数器，记录当前窗口中包含t中字符的个数
+        int count = 0;
+        // 定义pos，记录最小子串的起始位置
+        int pos = -1;
+
+        // 当右指针小于s的长度时，循环继续
+        while (right < s.size())
+        {
+            // 如果当前字符在t中，并且t中该字符的个数大于0，则计数器加1
+            if (t_cnt.find(s[right]) != t_cnt.end()
+                && --t_cnt[s[right]] >= 0)
+            {
+                count++;
+            }
+
+            // 当计数器等于t的长度时，说明当前窗口中包含了t中所有字符
+            while (count == t.size() && left <= right)
+            {
+                // 如果当前窗口的长度小于最小子串的长度，则更新最小子串的长度和起始位置
+                if (len > right - left + 1)
+                {
+                    pos = left;
+                    len = right - left + 1;
+                }
+
+                // 如果当前字符在t中，并且t中该字符的个数大于0，则计数器减1
+                if (t_cnt.find(s[left]) != t_cnt.end()
+                    && ++t_cnt[s[left]] > 0)
+                {
+                    count--;
+                }
+                // 左指针右移
+                left++;
+            }
+            // 右指针右移
+            right++;
+        }
+        // 如果pos为-1，说明没有找到最小子串，返回空字符串；否则返回最小子串
+        return pos == -1 ? "" : s.substr(pos, len);
+    }
+};
+
+ */
