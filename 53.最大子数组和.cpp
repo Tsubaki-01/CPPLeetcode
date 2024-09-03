@@ -1,3 +1,11 @@
+// @before-stub-for-debug-begin
+#include <vector>
+#include <string>
+#include "commoncppproblem53.h"
+
+using namespace std;
+// @before-stub-for-debug-end
+
 /*
  * @lc app=leetcode.cn id=53 lang=cpp
  *
@@ -12,21 +20,24 @@
 #include <unordered_set>
 using namespace std;
 // @lc code=start
-// 贪心
-class Solution {
+// 前缀和
+class Solution
+{
 public:
-    int maxSubArray(vector<int>& nums) {
-        if (nums.size() == 1)
-            return nums[0];
-
+    int maxSubArray(vector<int>& nums)
+    {
+        int min_tmp = 0;
+        int t = 0;
         int res = INT_MIN;
-        int sum = 0;
-        for (int i = 0;i < nums.size();++i)
+        // 要保证max_pos>min_pos，所以只记录最小的前缀和
+        for (int i = 0; i < nums.size(); i++)
         {
-            sum += nums[i];
-            res = max(res, sum);
-            sum < 0 ? (sum = 0) : 1;
+            t += nums[i];
+            res = max(res, t - min_tmp);
+            // 需要先算结果再更新min_tmp
+            min_tmp = min(min_tmp, t);
         }
+
         return res;
     }
 };
@@ -53,5 +64,28 @@ public:
     }
 }; */
 
+/*
+// 贪心
+class Solution
+{
+public:
+    int maxSubArray(vector<int>& nums)
+    {
+        if (nums.size() == 1)
+            return nums[0];
 
-// 前缀和
+        int res = INT_MIN;
+        int sum = 0;
+        for (int i = 0; i < nums.size(); ++i)
+        {
+            sum += nums[i];
+            res = max(res, sum);
+            sum < 0 ? (sum = 0) : 1;
+        }
+        return res;
+    }
+};
+ */
+
+
+ // 前缀和
