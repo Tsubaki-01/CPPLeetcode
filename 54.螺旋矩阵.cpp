@@ -1,10 +1,59 @@
+// @before-stub-for-debug-begin
+#include <vector>
+#include <string>
+#include "commoncppproblem54.h"
+
+using namespace std;
+// @before-stub-for-debug-end
+
 /*
  * @lc app=leetcode.cn id=54 lang=cpp
  *
  * [54] 螺旋矩阵
  */
 
- // @lc code=start
+#include <bits/stdc++.h>
+using namespace std;
+// @lc code=start
+
+// 方向向量
+class Solution
+{
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix)
+    {
+        int di = 0;
+        int dj = 1;
+        int i = 0;
+        int j = 0;
+        int total = matrix.size() * matrix[0].size();
+        vector<int> res(total, 0);
+        vector<vector<int>> visited(matrix.size(), vector<int>(matrix[0].size(), 0));
+
+        for (int t = 0; t < total; t++)
+        {
+            res[t] = matrix[i][j];
+            visited[i][j] = 1;
+
+            if (!(i + di >= 0 && i + di < matrix.size()
+                && j + dj >= 0 && j + dj < matrix[0].size()
+                && !visited[i + di][j + dj]))
+            {
+                swap(di, dj);
+                dj = -dj;
+            }
+
+            i += di;
+            j += dj;
+        }
+
+        return res;
+
+    }
+};
+// @lc code=end
+
+/*
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
@@ -36,5 +85,4 @@ public:
         return res;
     }
 };
-// @lc code=end
-
+ */
